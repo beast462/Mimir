@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+group 'net.beast462.int2204'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.0'
+}
+
+sourceCompatibility = '16'
+targetCompatibility = '16'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'net.beast462.int2204.mimir'
+    mainClass = 'net.beast462.int2204.mimir.Main'
+}
+
+configurations {
+    compileOnly {
+        canBeResolved(true)
+    }
+}
+
+javafx {
+    version = '16'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '12.2.0'
+    implementation group: 'org.kordamp.bootstrapfx', name: 'bootstrapfx-core', version: '0.4.0'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
+
+    if (project.hasProperty("bundle") && project.bundle.equals("TRUE")) {
+        project.logger.info("bundle argument found, bundling some dependencies")
+        compileOnly group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
+    }
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.beast462.int2204.mimir.Main'
+    }
+
+    from {
+        configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
