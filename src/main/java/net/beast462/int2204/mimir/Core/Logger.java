@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 public class Logger {
     private final OutputStream out;
+    private final OutputStream err;
     public static volatile Logger defaultLogger = new Logger(System.out);
 
     private static String now() {
@@ -15,10 +16,16 @@ public class Logger {
 
     public Logger() {
         this.out = System.out;
+        this.err = System.err;
     }
 
     public Logger(OutputStream out) {
+        this.out = this.err = out;
+    }
+
+    public Logger(OutputStream out, OutputStream err) {
         this.out = out;
+        this.err = err;
     }
 
     private static String generateMessage(String message, String level) {
@@ -40,7 +47,7 @@ public class Logger {
         var data = generateMessage(message, "error").getBytes();
 
         try {
-            out.write(data);
+            err.write(data);
         } catch (IOException exception) {
             defaultLogger.error("Cannot write log to stream");
             exception.printStackTrace();
