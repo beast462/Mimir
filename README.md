@@ -2,6 +2,10 @@
 
 Dictionary application (assignment for INT2204 course)
 
+## Cài đặt
+
+Ứng dụng được phát triển trên jdk 16 vì vậy jdk 16 được khuyên dùng khi chạy.
+
 ## Các chức năng
 
 Các chức năng sau đã được implement, nếu không được check, giáo viên có thể bỏ qua.
