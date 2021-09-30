@@ -26,7 +26,7 @@ public class DataConnection {
             conn = DriverManager.getConnection(
                     String.format("jdbc:sqlite:%s", datasource.toString()));
         } catch (SQLException exception) {
-            System.err.println("Cannot connect to database, exiting...");
+            Logger.defaultLogger.error("Cannot connect to database, exiting...");
             System.exit(126);
         }
 

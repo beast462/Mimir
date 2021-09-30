@@ -4,30 +4,39 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 
 public class AppConfig {
     private static volatile AppConfig instance;
 
     private final Path appDataPath;
-    private String appName;
+    private final Properties appProperties;
+    private final String appName;
 
-    private AppConfig() {
-        readAppName();
+    private AppConfig() throws IOException {
+        appName = readAppName();
         appDataPath = Paths.get(System.getProperty("user.home"), "." + appName);
+        appProperties = readAppProperties();
 
-        try {
-            readyAppDataPath();
-            readyDataPath();
-        } catch (IOException exception) {
-            System.err.println("Cannot initialize app data directory, exiting...");
-            System.exit(126);
-        }
+        readyAppDataPath();
+        readyDataPath();
+        readyLogPath();
     }
 
-    private void readAppName() {
+    private String readAppName() {
         var pkg = Main.class.getPackageName().split("\\.");
 
-        appName = pkg[pkg.length - 1];
+        return pkg[pkg.length - 1];
+    }
+
+    private Properties readAppProperties() throws IOException {
+        var configFileStream = Main.class.getResourceAsStream("/app.properties");
+        var props = new Properties();
+
+        assert configFileStream != null;
+        props.load(configFileStream);
+        configFileStream.close();
+        return props;
     }
 
     private void readyAppDataPath() throws IOException {
@@ -42,8 +51,19 @@ public class AppConfig {
             Files.createDirectory(dataPath);
     }
 
+    private void readyLogPath() throws IOException {
+        var logPath = Paths.get(appDataPath.toString(), "logs");
+
+        if (!Files.exists(logPath) || !Files.isDirectory(logPath))
+            Files.createDirectory(logPath);
+    }
+
     public Path getAppDataPath() {
         return appDataPath;
+    }
+
+    public Properties getAppProperties() {
+        return appProperties;
     }
 
     public String getAppName() {
@@ -54,7 +74,12 @@ public class AppConfig {
         if (instance == null)
             synchronized (AppConfig.class) {
                 if (instance == null)
-                    instance = new AppConfig();
+                    try {
+                        instance = new AppConfig();
+                    } catch (IOException exception) {
+                        System.err.println("Cannot initialize app data directory, exiting...");
+                        System.exit(126);
+                    }
             }
 
         return instance;
