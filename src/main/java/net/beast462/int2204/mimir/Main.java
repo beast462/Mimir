@@ -1,8 +1,8 @@
 package net.beast462.int2204.mimir;
 
-import net.beast462.int2204.mimir.Application.MimirApplication;
-import net.beast462.int2204.mimir.Core.DataInitializer;
-import net.beast462.int2204.mimir.Core.Logger;
+import net.beast462.int2204.mimir.application.MimirApplication;
+import net.beast462.int2204.mimir.core.DataInitializer;
+import net.beast462.int2204.mimir.core.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;

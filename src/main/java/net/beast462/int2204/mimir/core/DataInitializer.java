@@ -1,4 +1,4 @@
-package net.beast462.int2204.mimir.Core;
+package net.beast462.int2204.mimir.core;
 
 import net.beast462.int2204.mimir.Main;
 

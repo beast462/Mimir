@@ -1,4 +1,4 @@
-package net.beast462.int2204.mimir.Core.Models;
+package net.beast462.int2204.mimir.core.models;
 
 public class Definition {
     public int id;
