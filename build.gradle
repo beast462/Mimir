@@ -43,11 +43,6 @@ dependencies {
     implementation group: 'org.kordamp.bootstrapfx', name: 'bootstrapfx-core', version: '0.4.0'
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
 
-    if (project.hasProperty("bundle") && project.bundle.equals("TRUE")) {
-        project.logger.info("bundle argument found, bundling some dependencies")
-        compileOnly group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
-    }
-
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }
