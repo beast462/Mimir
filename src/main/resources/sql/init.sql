@@ -18,3 +18,9 @@ CREATE TABLE IF NOT EXISTS definition_relations(
     first_end INTEGER,
     second_end INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS agreements(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    agreement VARCHAR(15),
+    content INTEGER
+);
