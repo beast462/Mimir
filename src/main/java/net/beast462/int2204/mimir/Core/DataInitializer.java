@@ -4,20 +4,14 @@ import net.beast462.int2204.mimir.Main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class DataInitializer {
     private static String getInitSQLScript() {
-        var initSQL = Main.class.getResourceAsStream("/sql/init.sql");
-        assert initSQL != null;
+        var reader = new StreamReader(
+                Main.class.getResourceAsStream("/sql/init.sql")
+        );
 
-        var scanner = new Scanner(initSQL);
-        var builder = new StringBuilder();
-
-        while (scanner.hasNextLine())
-            builder.append(scanner.nextLine());
-
-        return builder.toString();
+        return reader.toString();
     }
 
     private static void initTables(Connection connection) throws SQLException {
