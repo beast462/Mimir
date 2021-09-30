@@ -9,6 +9,6 @@ module net.beast462.int2204.mimir {
 
     opens net.beast462.int2204.mimir to javafx.fxml;
     exports net.beast462.int2204.mimir;
-    exports net.beast462.int2204.mimir.Graphical;
-    opens net.beast462.int2204.mimir.Graphical to javafx.fxml;
+    exports net.beast462.int2204.mimir.Application;
+    opens net.beast462.int2204.mimir.Application to javafx.fxml;
 }

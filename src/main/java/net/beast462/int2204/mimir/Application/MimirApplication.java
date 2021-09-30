@@ -1,4 +1,4 @@
-package net.beast462.int2204.mimir.Graphical;
+package net.beast462.int2204.mimir.Application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

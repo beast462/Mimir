@@ -1,4 +1,4 @@
-package net.beast462.int2204.mimir.Graphical;
+package net.beast462.int2204.mimir.Application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

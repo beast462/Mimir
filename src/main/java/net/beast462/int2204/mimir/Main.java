@@ -1,32 +1,51 @@
 package net.beast462.int2204.mimir;
 
-import net.beast462.int2204.mimir.Core.DataConnection;
+import net.beast462.int2204.mimir.Application.MimirApplication;
 import net.beast462.int2204.mimir.Core.DataInitializer;
+import net.beast462.int2204.mimir.Core.Logger;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Main {
+    private static Logger logger;
+
+    private static void exitByCannotCreateLogFile() {
+        Logger.defaultLogger.error("Cannot initialize log file");
+        System.exit(126);
+    }
+
     private static void ensureAppConfiguration() {
         var appConfig = AppConfig.getInstance();
+
+        File logFile = new File(
+                Paths.get(
+                        appConfig.getAppDataPath().toString(),
+                        "logs",
+                        String.format("%d.log", System.currentTimeMillis())
+                ).toString()
+        );
+
+        try {
+            assert logFile.exists() || logFile.createNewFile();
+
+            logger = new Logger(new FileOutputStream(logFile));
+        } catch (IOException exception) {
+            exitByCannotCreateLogFile();
+        }
+
         DataInitializer.initialize();
     }
 
-    private static void startHeadless(String[] args) {
-        net.beast462.int2204.mimir.CommandLine.MimirApplication.launch(args);
-    }
-
-    private static void startGUI(String[] args) {
-        net.beast462.int2204.mimir.Graphical.MimirApplication.launch(args);
+    public static Logger getLogger() {
+        return logger;
     }
 
     public static void main(String[] args) {
         ensureAppConfiguration();
 
-        for (String arg : args) {
-            if (arg.equals("--headless")) {
-                startHeadless(args);
-                return;
-            }
-        }
-
-        startGUI(args);
+        MimirApplication.launch(args);
     }
 }
