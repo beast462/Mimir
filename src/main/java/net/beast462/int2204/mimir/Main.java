@@ -1,5 +1,6 @@
 package net.beast462.int2204.mimir;
 
+import javafx.scene.text.Font;
 import net.beast462.int2204.mimir.application.MimirApplication;
 import net.beast462.int2204.mimir.core.DataInitializer;
 import net.beast462.int2204.mimir.core.Logger;

@@ -8,9 +8,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import net.beast462.int2204.mimir.Main;
-import org.kordamp.bootstrapfx.BootstrapFX;
-
 public class MimirApplication extends Application {
     private static final double INITIAL_SCALE = 0.6;
     private static Stage primaryStage;
@@ -18,7 +15,7 @@ public class MimirApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        var fxmlLoader = new FXMLLoader(Main.class.getResource("root-view.fxml"));
+        var fxmlLoader = new FXMLLoader(MimirApplication.class.getResource("root-view.fxml"));
 
         var screenSize = Screen.getPrimary().getBounds();
 
@@ -27,7 +24,6 @@ public class MimirApplication extends Application {
                 screenSize.getWidth() * INITIAL_SCALE,
                 screenSize.getHeight() * INITIAL_SCALE
         );
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
         stage.setTitle(TITLE);
         stage.setScene(scene);

@@ -20,3 +20,9 @@ Các chức năng sau đã được implement, nếu không được check, giá
 | Tối ưu thuật toán tìm kiếm                 | +1   | &#9744;       |
 | Dùng API google translate                  | +1   | &#9744;       |
 | Tích hợp cơ sở dữ liệu từ điển phong phú   | +2   | &#9744;       |
+
+## External resources
+
+1. Fontawesome cheatsheet for kordamp ikonli
+
+   https://kordamp.org/ikonli/cheat-sheet-fontawesome5.html
