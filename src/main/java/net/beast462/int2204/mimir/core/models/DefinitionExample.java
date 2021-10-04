@@ -1,9 +1,11 @@
 package net.beast462.int2204.mimir.core.models;
 
-public class DefinitionRelation {
+public class DefinitionExample {
     public int id;
 
-    public int wordRef;
+    public String english;
+
+    public String vietnamese;
 
     public int definitionRef;
 }
