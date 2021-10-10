@@ -1,18 +1,22 @@
-module net.beast462.int2204.mimir {
+module beast.mimir {
     requires java.sql;
     requires java.net.http;
 
+    requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
 
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires com.jfoenix;
 
-    opens net.beast462.int2204.mimir to javafx.fxml;
-    exports net.beast462.int2204.mimir;
-    exports net.beast462.int2204.mimir.application;
-    opens net.beast462.int2204.mimir.application to javafx.fxml;
-    exports net.beast462.int2204.mimir.application.controllers;
-    opens net.beast462.int2204.mimir.application.controllers to javafx.fxml;
+    opens net.beast462.int2204.mimir
+            to javafx.base, javafx.controls, javafx.fxml, javafx.graphics;
+
+    opens net.beast462.int2204.mimir.application
+            to javafx.base, javafx.controls, javafx.fxml, javafx.graphics;
+
+    opens net.beast462.int2204.mimir.application.controllers
+            to javafx.base, javafx.controls, javafx.fxml, javafx.graphics;
 }
