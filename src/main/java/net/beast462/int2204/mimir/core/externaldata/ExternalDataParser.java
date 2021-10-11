@@ -107,7 +107,7 @@ public class ExternalDataParser {
         var definition = new Definition();
         var lines = raw.split("\n");
 
-        definition.id = generateId((int) 2e8);
+        definition.id = generateId(2);
         definition.wordType = wordType;
         definition.wordRef = wordId;
 
@@ -192,7 +192,7 @@ public class ExternalDataParser {
                 word.pronunciation = firstLineTokens[1].substring(0, firstLineTokens[1].length() - 1).trim();
             else
                 word.pronunciation = "";
-            word.id = wordId = generateId((int) 1e8);
+            word.id = wordId = generateId(1);
             words.put(word.content, word.id);
 
             accumulator.words.add(word);
