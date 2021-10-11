@@ -8,9 +8,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class ExternalDataLoader {
-    private static CompletableFuture<String> fetchRawData(String url) {
+    private Function<Object, Object> progressCallback;
+
+    private CompletableFuture<String> fetchRawData(String url) {
         HttpRequest request = null;
 
         try {
@@ -18,7 +21,7 @@ public class ExternalDataLoader {
                     .version(HttpClient.Version.HTTP_1_1)
                     .GET()
                     .build();
-        } catch (URISyntaxException exception) {
+        } catch (URISyntaxException ignored) {
         }
 
         var client = HttpClient.newHttpClient();
@@ -33,11 +36,20 @@ public class ExternalDataLoader {
         return response.thenApply(HttpResponse::body);
     }
 
-    public static CompletableFuture<Object> load() {
+    public void setProgressCallback(Function<Object, Object> progressCallback) {
+        this.progressCallback = progressCallback;
+    }
+
+    public CompletableFuture<ExternalData> load() {
         var dataLocation = AppConfig.getInstance().getAppProperties().getProperty("external_dictionary");
+        var parser = new ExternalDataParser();
 
         return CompletableFuture.completedFuture(dataLocation)
-                .thenCompose(ExternalDataLoader::fetchRawData)
-                .thenCompose(ExternalDataParser::parseRaw);
+                .thenCompose(this::fetchRawData)
+                .thenCompose((raw) -> {
+                    if (progressCallback != null) progressCallback.apply(null);
+                    return CompletableFuture.completedFuture(raw);
+                })
+                .thenApply(parser::parseRaw);
     }
 }

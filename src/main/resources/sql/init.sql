@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS words(
 CREATE TABLE IF NOT EXISTS definitions(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     definition TEXT,
-    note TEXT,
     wordRef INTEGER NOT NULL,
     wordType INTEGER NOT NULL,
     FOREIGN KEY(wordRef) REFERENCES words(id)
