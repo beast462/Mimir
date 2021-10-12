@@ -19,7 +19,7 @@ Các chức năng sau đã được implement, nếu không được check, giá
 | Giao diện đồ họa dễ dùng và thân thiện     | +1   | &#9744;       |
 | Tối ưu thuật toán tìm kiếm                 | +1   | &#9744;       |
 | Dùng API google translate                  | +1   | &#9744;       |
-| Tích hợp cơ sở dữ liệu từ điển phong phú   | +2   | &#9744;       |
+| Tích hợp cơ sở dữ liệu từ điển phong phú   | +2   | &#9745;       |
 
 ## External resources
 
