@@ -1,6 +1,5 @@
 package net.beast462.int2204.mimir;
 
-import javafx.scene.text.Font;
 import net.beast462.int2204.mimir.application.MimirApplication;
 import net.beast462.int2204.mimir.core.DataInitializer;
 import net.beast462.int2204.mimir.core.Logger;
@@ -8,6 +7,8 @@ import net.beast462.int2204.mimir.core.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
 public class Main {
@@ -44,8 +45,19 @@ public class Main {
         return logger;
     }
 
+    public static void sandbox() {
+    }
+
     public static void main(String[] args) {
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         ensureAppConfiguration();
+
+        for (String arg : args) {
+            if (arg.equals("--sandbox")) {
+                sandbox();
+                return;
+            }
+        }
 
         MimirApplication.launch(args);
     }
