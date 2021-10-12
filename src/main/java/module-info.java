@@ -6,10 +6,7 @@ module beast.mimir {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.fontawesome5;
-    requires com.jfoenix;
+    requires javafx.web;
 
     opens net.beast462.int2204.mimir
             to javafx.base, javafx.controls, javafx.fxml, javafx.graphics;

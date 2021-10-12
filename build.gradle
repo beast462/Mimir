@@ -31,14 +31,11 @@ application {
 
 javafx {
     version = '16'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.web']
 }
 
 dependencies {
-    implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '12.2.0'
-    implementation group: 'org.kordamp.ikonli', name: 'ikonli-fontawesome5-pack', version: '12.2.0'
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
-    implementation group: 'com.jfoenix', name: 'jfoenix', version: '9.0.3'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
@@ -56,13 +53,4 @@ jar {
 
 run {
     mainClassName = application.getMainClass().get()
-
-    applicationDefaultJvmArgs += [
-            '--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix',
-            '--add-exports=javafx.base/com.sun.javafx.event=com.jfoenix',
-            '--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix',
-            '--add-exports=javafx.graphics/com.sun.javafx.scene=com.jfoenix',
-            '--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix',
-            '--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix'
-    ]
 }
