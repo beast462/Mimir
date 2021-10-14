@@ -79,12 +79,12 @@ public class ExternalDataParser {
             return;
 
         var example = new DefinitionExample();
-        var tokens = raw.split("\\+\\s*");
+        var tokens = raw.split("\\+");
 
         example.id = generateId(3);
         example.definitionRef = definitionId;
-        example.english = tokens[0];
-        example.vietnamese = tokens[1];
+        example.english = tokens[0].trim();
+        example.vietnamese = tokens[1].trim();
 
         accumulator.examples.add(example);
     }
@@ -111,7 +111,7 @@ public class ExternalDataParser {
         definition.wordType = wordType;
         definition.wordRef = wordId;
 
-        definition.definition = lines[0].substring(1).trim();
+        definition.definition = lines[0].trim().replaceFirst("^-", "").trim();
 
         accumulator.definitions.add(definition);
 

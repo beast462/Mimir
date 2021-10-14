@@ -43,7 +43,7 @@ public class ExternalDataSynchronizer {
         logger.info(String.format("Synchronizing definitions, found %d", definitions.size()));
 
         var statement = connection.prepareStatement(
-                "INSERT INTO [definitions]([id], [definition], [wordRef], [wordType]) VALUES(?, ?, ?, ?)"
+                "INSERT INTO [definitions]([id], [definition], [word_ref], [word_type]) VALUES(?, ?, ?, ?)"
         );
 
         for (final var definition : definitions) {
@@ -63,7 +63,7 @@ public class ExternalDataSynchronizer {
         logger.info(String.format("Synchronizing examples, found %d", examples.size()));
 
         var statement = connection.prepareStatement(
-                "INSERT INTO [definitionExamples]([id], [english], [vietnamese], [definitionRef]) VALUES(?, ?, ?, ?)"
+                "INSERT INTO [definition_examples]([id], [english], [vietnamese], [definition_ref]) VALUES(?, ?, ?, ?)"
         );
 
         for (final var example : examples) {

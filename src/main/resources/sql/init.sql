@@ -7,17 +7,17 @@ CREATE TABLE IF NOT EXISTS words(
 CREATE TABLE IF NOT EXISTS definitions(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     definition TEXT,
-    wordRef INTEGER NOT NULL,
-    wordType INTEGER NOT NULL,
-    FOREIGN KEY(wordRef) REFERENCES words(id)
+    word_ref INTEGER NOT NULL,
+    word_type INTEGER NOT NULL,
+    FOREIGN KEY(word_ref) REFERENCES words(id)
 );
 
-CREATE TABLE IF NOT EXISTS definitionExamples(
+CREATE TABLE IF NOT EXISTS definition_examples(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     english TEXT,
     vietnamese TEXT,
-    definitionRef INTEGER NOT NULL,
-    FOREIGN KEY(definitionRef) REFERENCES definitions(id)
+    definition_ref INTEGER NOT NULL,
+    FOREIGN KEY(definition_ref) REFERENCES definitions(id)
 );
 
 CREATE TABLE IF NOT EXISTS definition_relations(
