@@ -62,9 +62,12 @@ public class ExternalDataSynchronizer {
     private void synchronizeExamples(List<DefinitionExample> examples) throws SQLException {
         logger.info(String.format("Synchronizing examples, found %d", examples.size()));
 
-        var statement = connection.prepareStatement(
-                "INSERT INTO [definition_examples]([id], [english], [vietnamese], [definition_ref]) VALUES(?, ?, ?, ?)"
-        );
+        var statement = connection.prepareStatement("""
+                INSERT INTO [definition_examples]
+                    ([id], [english], [vietnamese], [definition_ref])
+                VALUES
+                    (?, ?, ?, ?)
+                """);
 
         for (final var example : examples) {
             statement.setInt(1, example.id);
