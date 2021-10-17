@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.web.WebView?>
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="net.beast462.int2204.mimir.application.controllers.RootController">
-    <WebView fx:id="web" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"></WebView>
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.beast462.int2204.mimir.application.controllers.RootController"
+            fx:id="root">
 </AnchorPane>
