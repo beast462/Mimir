@@ -228,6 +228,7 @@ public class ExternalDataParser {
                 System.exit(0);
             }
 
+        ids.clear();
         return result;
     }
 }
