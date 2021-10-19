@@ -1,6 +1,7 @@
 module beast.mimir {
     requires java.sql;
     requires java.net.http;
+    requires java.desktop;
 
     requires javafx.base;
     requires javafx.controls;
@@ -12,6 +13,8 @@ module beast.mimir {
 
     requires org.json;
 
+    requires freetts;
+
     opens net.beast462.int2204.mimir
             to javafx.base, javafx.controls, javafx.fxml;
 
@@ -22,6 +25,6 @@ module beast.mimir {
     opens net.beast462.int2204.mimir.application.controllers
             to javafx.base, javafx.controls, javafx.fxml;
 
-    opens net.beast462.int2204.mimir.application.interceptions
+    opens net.beast462.int2204.mimir.application.xapi
             to javafx.web;
 }

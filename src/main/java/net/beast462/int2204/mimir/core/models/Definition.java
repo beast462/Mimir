@@ -1,6 +1,13 @@
 package net.beast462.int2204.mimir.core.models;
 
+import java.util.Map;
+
 public class Definition {
+    public int id;
+    public String definition;
+    public int wordRef;
+    public int wordType;
+
     public static class WordTypes {
         public static final int UNSPECIFIED = 0;
         public static final int NOUN = 1;
@@ -18,13 +25,24 @@ public class Definition {
         public static final int FIGURATIVE = 4096;
         public static final int DEFINITION = 8192;
         public static final int AUXILIARY = 16384;
+
+        public static final Map<Integer, String> typeRefs = Map.ofEntries(
+                Map.entry(UNSPECIFIED, "không"),
+                Map.entry(NOUN, "danh từ"),
+                Map.entry(ADJECTIVE, "tính từ"),
+                Map.entry(VERB, "nội động từ"),
+                Map.entry(ADVERB, "trạng từ"),
+                Map.entry(TRANS_VERB, "ngoại động từ"),
+                Map.entry(ARTICLE, "mạo từ"),
+                Map.entry(PREPOSITION, "giới từ"),
+                Map.entry(DETERMINER, "từ hạn định"),
+                Map.entry(PRONOUN, "đại từ"),
+                Map.entry(CONJUNCTION, "liên từ"),
+                Map.entry(INTERJECTION, "thán từ"),
+                Map.entry(ACRONYM, "viết tắt"),
+                Map.entry(FIGURATIVE, "nghĩa bóng"),
+                Map.entry(DEFINITION, "định nghĩa"),
+                Map.entry(AUXILIARY, "trợ từ")
+        );
     }
-
-    public int id;
-
-    public String definition;
-
-    public int wordRef;
-
-    public int wordType;
 }

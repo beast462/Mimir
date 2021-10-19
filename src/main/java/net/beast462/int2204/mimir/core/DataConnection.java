@@ -33,14 +33,6 @@ public class DataConnection {
         return conn;
     }
 
-    public Path getDatasource() {
-        return datasource;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
     public static DataConnection getInstance() {
         if (instance == null)
             synchronized (DataConnection.class) {
@@ -49,5 +41,13 @@ public class DataConnection {
             }
 
         return instance;
+    }
+
+    public Path getDatasource() {
+        return datasource;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

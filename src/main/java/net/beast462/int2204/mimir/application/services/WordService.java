@@ -1,47 +1,41 @@
 package net.beast462.int2204.mimir.application.services;
 
-import net.beast462.int2204.mimir.application.controllers.RootController;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+import net.beast462.int2204.mimir.application.interfaces.IDefinitionService;
 import net.beast462.int2204.mimir.application.interfaces.IWordService;
-import net.beast462.int2204.mimir.core.DataConnection;
+import net.beast462.int2204.mimir.core.DBUtils;
+import net.beast462.int2204.mimir.core.bridge.EngineContainer;
+import net.beast462.int2204.mimir.core.models.Definition;
 import net.beast462.int2204.mimir.core.models.Word;
+import net.beast462.int2204.mimir.core.webview.JSObjectUtils;
 import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class WordService implements IWordService {
+    private static Voice voice;
+    private final IDefinitionService definitionService;
+
+    public WordService() {
+        definitionService = new DefinitionService();
+
+        if (voice == null)
+            synchronized (WordService.class) {
+                var manager = VoiceManager.getInstance();
+                voice = manager.getVoice("kevin16");
+                CompletableFuture.runAsync(() -> voice.allocate());
+            }
+    }
+
     private List<Word> query(String query, Object[] params) {
         var result = new LinkedList<Word>();
-        var connection = DataConnection.getInstance().getConnection();
-        ResultSet queryResult = null;
-
-        try {
-            var statement = connection.prepareStatement(
-                    query
-            );
-
-            for (int i = 0; i < params.length; ++i) {
-                var param = params[i];
-
-                if (param instanceof String)
-                    statement.setString(i + 1, (String) param);
-
-                if (param instanceof Integer)
-                    statement.setInt(i + 1, (Integer) param);
-
-                if (param instanceof Double)
-                    statement.setDouble(i + 1, (Double) param);
-            }
-            queryResult = statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        assert queryResult != null;
+        var queryResult = DBUtils.query(query, params);
 
         try {
             while (queryResult.next()) {
@@ -55,6 +49,34 @@ public class WordService implements IWordService {
         }
 
         return result;
+    }
+
+    private int insertWord(Word word) {
+        DBUtils.query(
+                """
+                        INSERT INTO [words]([content], [pronunciation])
+                        VALUES(?,?)
+                        """,
+                new Object[]{word.content, word.pronunciation}
+        );
+
+        var fetchIdResult = DBUtils.query(
+                """
+                        SELECT MAX([id]) AS [id] FROM [words]
+                        """,
+                new Object[]{}
+        );
+
+        if (fetchIdResult == null) return -1;
+
+        try {
+            if (fetchIdResult.next())
+                return fetchIdResult.getInt("id");
+            else
+                return -1;
+        } catch (SQLException ignored) {
+            return -1;
+        }
     }
 
     private JSObject makeResult(List<Word> words) {
@@ -74,29 +96,114 @@ public class WordService implements IWordService {
             array.put(obj);
         }
 
-        return (JSObject) RootController.getEngine().executeScript(array.toString());
+        return (JSObject) EngineContainer.getEngine().executeScript(array.toString());
     }
 
+    @Override
     public JSObject absoluteSearch(String text) {
         var words = query(
-                "SELECT * FROM [words] WHERE content = ?",
+                "SELECT * FROM [words] WHERE [content] = ?",
                 new Object[]{text}
         );
 
         return makeResult(words);
     }
 
-    public JSObject advanceSearch(String text) {
+    @Override
+    public JSObject advanceSearch(String text, int limit) {
         var words = query(
                 """
                         SELECT * FROM [words]
-                        WHERE content LIKE ? || '%'
-                        ORDER BY content ASC
+                        WHERE [content] LIKE ? || '%'
+                        ORDER BY [content] ASC
                         LIMIT ?
                         """,
-                new Object[]{text, 20}
+                new Object[]{text, limit}
         );
 
         return makeResult(words);
+    }
+
+    @Override
+    public JSObject getWord(int wordId) {
+        var words = query(
+                """
+                        SELECT * FROM [words]
+                        WHERE [id] = ?
+                        """,
+                new Object[]{wordId}
+        );
+
+        if (words.size() == 0)
+            return null;
+
+        var word = words.get(0);
+
+        var jsWord = JSObjectUtils.newObject();
+        jsWord.setMember("id", word.id);
+        jsWord.setMember("content", word.content);
+        jsWord.setMember("pronunciation", word.pronunciation);
+
+        var definitions = definitionService.getDefinitionsByWordId(word.id);
+        jsWord.setMember("definitions", definitions);
+
+        return jsWord;
+    }
+
+    @Override
+    public void editWord(JSObject obj) {
+
+    }
+
+    @Override
+    public int addWord(JSObject obj) {
+        var word = new Word();
+        word.pronunciation = obj.getMember("pronunciation").toString();
+        word.content = obj.getMember("word").toString();
+
+        word.id = insertWord(word);
+
+        JSObjectUtils.forEach(
+                (JSObject) obj.getMember("definitions"),
+                (def) -> {
+                    definitionService.addDefinition(word.id, def);
+
+                    return null;
+                }
+        );
+
+        return word.id;
+    }
+
+    @Override
+    public boolean deleteWord(int wordId) {
+        var queryResult = DBUtils.query(
+                """
+                        SELECT [id] FROM [words]
+                        WHERE [id] = ?
+                        """,
+                new Object[]{wordId}
+        );
+
+        try {
+            if (!queryResult.next()) return false;
+        } catch (SQLException ignored) {
+            return false;
+        }
+
+        DBUtils.query(
+                """
+                        DELETE FROM [words]
+                        WHERE [id] = ?
+                        """,
+                new Object[]{wordId}
+        );
+
+        return true;
+    }
+
+    @Override
+    public void speak(String word) {
+        voice.speak(word);
     }
 }
