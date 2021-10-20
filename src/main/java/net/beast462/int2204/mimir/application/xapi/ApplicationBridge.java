@@ -8,8 +8,8 @@ import net.beast462.int2204.mimir.application.interfaces.IWordService;
 import net.beast462.int2204.mimir.application.services.AgreementService;
 import net.beast462.int2204.mimir.application.services.DefinitionService;
 import net.beast462.int2204.mimir.application.services.WordService;
-import net.beast462.int2204.mimir.core.webview.JSObjectUtils;
 import net.beast462.int2204.mimir.core.Logger;
+import net.beast462.int2204.mimir.core.webview.JSObjectUtils;
 import netscape.javascript.JSObject;
 
 public class ApplicationBridge implements IWordService, IAgreementService, IDefinitionService {
@@ -75,12 +75,14 @@ public class ApplicationBridge implements IWordService, IAgreementService, IDefi
     }
 
     @Override
-    public void editWord(JSObject obj) {
+    public int editWord(JSObject obj) {
         Main.getLogger().info(String.format(
-                "Editing word # %d",
+                "Editing word %s # %d",
+                obj.getMember("content"),
                 obj.getMember("id")
         ));
-        words.editWord(obj);
+
+        return words.editWord(obj);
     }
 
     @Override

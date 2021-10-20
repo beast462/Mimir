@@ -14,7 +14,7 @@ Các chức năng sau đã được implement, nếu không được check, giá
 
 | Chức năng                                  | Điểm | Đã hoàn thành |
 |--------------------------------------------|------|---------------|
-| Cài đặt được chức năng thêm sửa xóa từ mới | +3   | &#9744;       |
+| Cài đặt được chức năng thêm sửa xóa từ mới | +3   | &#9745;       |
 | Chức năng tra từ                           | +2   | &#9745;       |
 | Phát âm tiếng anh                          | +1   | &#9745;       |
 | Giao diện đồ họa cơ bản                    | +2   | &#9745;       |

@@ -26,4 +26,8 @@ public class JSObjectUtils {
         for (var i = 0; i < length; ++i)
             callback.apply((JSObject) obj.getSlot(i));
     }
+
+    public static boolean hasKey(JSObject obj, String member) {
+        return (boolean) obj.call("hasOwnProperty", member);
+    }
 }

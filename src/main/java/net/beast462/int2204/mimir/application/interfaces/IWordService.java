@@ -9,7 +9,7 @@ public interface IWordService {
 
     JSObject getWord(int wordId);
 
-    void editWord(JSObject obj);
+    int editWord(JSObject obj);
 
     int addWord(JSObject obj);
 
