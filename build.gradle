@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'com.github.node-gradle.node' version '3.0.1'
 }
 
 group 'net.beast462.int2204'
@@ -47,10 +48,37 @@ test {
     useJUnitPlatform()
 }
 
+node.version = '14.17.2'
+node.nodeProjectDir = file("${projectDir}/src/view")
+
 jar {
     manifest {
         attributes 'Main-Class': application.getMainClass().get()
     }
+}
+
+task compileUI(type: NpmTask) {
+    dependsOn npmInstall
+    args = ['run', 'build']
+
+    doLast {
+        copy {
+            from "${projectDir}/src/view/dist"
+            into "${getBuildDir()}/resources/main/net/beast462/int2204/mimir/dist"
+        }
+    }
+}
+
+task publish {
+    dependsOn compileUI, compileJava, build
+}
+
+task runJar(type: JavaExec) {
+    getLogger().info("${getBuildDir()}/libs/${name}-${version}.jar")
+    classpath = files("${getBuildDir()}/libs/${name}-${version}.jar")
+    classpath += sourceSets.main.runtimeClasspath
+    mainClass.set(application.getMainClass().get())
+    mainClassName = application.getMainClass().get()
 }
 
 run {

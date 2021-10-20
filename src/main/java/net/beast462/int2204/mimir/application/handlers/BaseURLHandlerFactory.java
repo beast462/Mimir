@@ -5,7 +5,7 @@ import java.net.URLStreamHandlerFactory;
 
 public class BaseURLHandlerFactory implements URLStreamHandlerFactory {
     public URLStreamHandler createURLStreamHandler(String protocol) {
-        if (protocol.equals("mimir-resources")) {
+        if (protocol.equals("resources")) {
             return new BaseURLHandler();
         }
 

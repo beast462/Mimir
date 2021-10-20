@@ -26,5 +26,5 @@ module beast.mimir {
             to javafx.base, javafx.controls, javafx.fxml;
 
     opens net.beast462.int2204.mimir.application.xapi
-            to javafx.web;
+            to javafx.base, javafx.web;
 }

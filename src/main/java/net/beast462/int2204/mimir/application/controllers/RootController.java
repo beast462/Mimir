@@ -37,6 +37,12 @@ public class RootController implements Initializable {
         return polyfill + index;
     }
 
+    private boolean isDev() {
+        var env = System.getenv("ENV");
+        if (env == null) return false;
+        return env.equals("development");
+    }
+
     private void initializeWebView() {
         webview = new WebView();
         AnchorPane.setTopAnchor(webview, 0d);
@@ -88,6 +94,13 @@ public class RootController implements Initializable {
                     }
                 });
 
-        engine.load("http://localhost:8080");
+        if (isDev())
+            engine.load("http://localhost:8080");
+        else
+            engine.loadContent(new StreamReader(
+                    Main.class.getResourceAsStream(
+                            "/net/beast462/int2204/mimir/dist/index.html"
+                    )
+            ).toString());
     }
 }

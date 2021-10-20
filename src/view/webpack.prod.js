@@ -27,7 +27,7 @@ module.exports = () => [
   {
     entry: path.join(context, 'src', 'index.js'),
     output: {
-      publicPath: '/dist/',
+      publicPath: 'resources://net/beast462/int2204/mimir/dist/',
       path: path.join(context, 'dist'),
       filename: 'view.bundle.js',
     },
