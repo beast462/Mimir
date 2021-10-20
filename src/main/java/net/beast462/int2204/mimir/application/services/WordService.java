@@ -5,6 +5,7 @@ import com.sun.speech.freetts.VoiceManager;
 import net.beast462.int2204.mimir.application.interfaces.IDefinitionService;
 import net.beast462.int2204.mimir.application.interfaces.IWordService;
 import net.beast462.int2204.mimir.core.DBUtils;
+import net.beast462.int2204.mimir.core.Logger;
 import net.beast462.int2204.mimir.core.bridge.EngineContainer;
 import net.beast462.int2204.mimir.core.models.Definition;
 import net.beast462.int2204.mimir.core.models.Word;
@@ -151,15 +152,25 @@ public class WordService implements IWordService {
     }
 
     @Override
-    public void editWord(JSObject obj) {
+    public int editWord(JSObject obj) {
+        var wordContent = (String) obj.getMember("content");
 
+        DBUtils.query(
+                """
+                        DELETE FROM [words]
+                        WHERE [content] = ?
+                        """,
+                new Object[]{wordContent}
+        );
+
+        return addWord(obj);
     }
 
     @Override
     public int addWord(JSObject obj) {
         var word = new Word();
         word.pronunciation = obj.getMember("pronunciation").toString();
-        word.content = obj.getMember("word").toString();
+        word.content = obj.getMember("content").toString();
 
         word.id = insertWord(word);
 

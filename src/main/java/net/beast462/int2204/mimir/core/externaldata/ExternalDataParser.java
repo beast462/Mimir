@@ -224,7 +224,6 @@ public class ExternalDataParser {
                 parseWord(word.trim(), result);
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(word);
                 System.exit(0);
             }
 
