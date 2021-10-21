@@ -6,7 +6,7 @@ import net.beast462.int2204.mimir.application.interfaces.IRelationService;
 import net.beast462.int2204.mimir.core.DBUtils;
 import net.beast462.int2204.mimir.core.bridge.EngineContainer;
 import net.beast462.int2204.mimir.core.models.Definition;
-import net.beast462.int2204.mimir.core.webview.JSObjectUtils;
+import net.beast462.int2204.mimir.core.bridge.JSObjectUtils;
 import netscape.javascript.JSObject;
 
 import java.sql.SQLException;

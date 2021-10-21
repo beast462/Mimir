@@ -16,7 +16,7 @@ public class DataConnection {
 
     private DataConnection() {
         var appConfig = AppConfig.getInstance();
-        datasource = Paths.get(appConfig.getAppDataPath().toString(), "data", AppConfig.getInstance().getAppName() + ".db");
+        datasource = Paths.get(appConfig.getAppDataPath().toString(), "data", appConfig.getAppName() + ".db");
         connection = connectDatabase(datasource);
     }
 
