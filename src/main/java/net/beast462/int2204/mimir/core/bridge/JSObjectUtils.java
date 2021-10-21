@@ -1,6 +1,5 @@
-package net.beast462.int2204.mimir.core.webview;
+package net.beast462.int2204.mimir.core.bridge;
 
-import net.beast462.int2204.mimir.core.bridge.EngineContainer;
 import netscape.javascript.JSObject;
 
 import java.util.function.Function;
