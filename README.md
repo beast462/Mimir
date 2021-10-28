@@ -1,4 +1,4 @@
-# Mimir
+# mimir
 
 Dictionary application (assignment of INT2204 course)
 
